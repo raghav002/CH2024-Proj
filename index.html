@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Schedule Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Academic Schedule Generator</h1>
+    <form id="schedule-form">
+        <label for="interests">Enter your interests:</label>
+        <input type="text" id="interests" name="interests" required>
+        
+        <label for="credits">Credits per semester:</label>
+        <input type="number" id="credits" name="credits" required>
+        
+        <label for="transfer_credits">Transfer credits:</label>
+        <input type="number" id="transfer_credits" name="transfer_credits" required>
+        
+        <label for="completed_courses">Completed courses (comma-separated):</label>
+        <input type="text" id="completed_courses" name="completed_courses">
+        
+        <button type="submit">Generate Schedule</button>
+    </form>
+    <div id="schedule-output"></div>
+    <script src="script.js"></script>
+</body>
+</html>
