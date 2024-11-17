@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap's JS bundle for dropdown functionality
+import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap's JS bundle for modal functionality
 import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
   const [formData, setFormData] = useState({ major: '', goals: '' });
   const [generatedPlan, setGeneratedPlan] = useState('');
+  const [selectedCard, setSelectedCard] = useState(null); // State for the clicked card
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,132 +15,22 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-// HARDCODED FOR NOW - will be replaced by AI model
-    const plan = `
-      <div class="plan-container">
-  <div class="card">
-    <h4>Semester 1: Fall Year 1</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 2: Spring Year 1</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 3: Fall Year 2</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 4: Spring Year 2</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 5: Fall Year 3</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 6: Spring Year 3</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 7: Fall Year 4</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 8: Spring Year 4</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 9: Fall Year 5</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 10: Spring Year 5</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 11: Fall Year 6</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h4>Semester 12: Spring Year 6</h4>
-    <ul>
-      <li>Course 1: [Course Name] - [Credits]</li>
-      <li>Course 2: [Course Name] - [Credits]</li>
-      <li>Course 3: [Course Name] - [Credits]</li>
-      <li>Course 4: [Course Name] - [Credits]</li>
-      <li><strong>Total Credits:</strong> [Total]</li>
-    </ul>
-  </div>
-</div>
-
-    `;
+    // HARDCODED FOR NOW - will be replaced by AI model
+    const plan = [
+      { title: "Semester 1: Fall Year 1", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 2: Spring Year 1", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 3: Summer Year 1", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 4: Fall Year 2", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 5: Spring Year 2", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 6: Summer Year 2", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 7: Fall Year 3", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 8: Spring Year 3", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 9: Summer Year 3", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 10: Fall Year 4", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 11: Spring Year 4", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
+      { title: "Semester 12: Summer Year 4", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" }
+    ];
+    
     setGeneratedPlan(plan);
   };
 
@@ -226,45 +117,56 @@ const App = () => {
             <button type="submit" className="btn btn-primary w-100">Generate Plan</button>
           </form>
 
+          {/* Render Generated Plan */}
           {generatedPlan && (
-            <div
-              id="generatedPlan"
-              className="p-4 bg-white border rounded shadow"
-              dangerouslySetInnerHTML={{ __html: generatedPlan }}
-            ></div>
+            <div className="plan-container d-flex flex-wrap gap-3">
+              {generatedPlan.map((card, index) => (
+                <div
+                  key={index}
+                  className="card shadow-sm"
+                  style={{ width: '18rem', cursor: 'pointer' }}
+                  onClick={() => setSelectedCard(card)} // Set the clicked card
+                >
+                  <div className="card-body">
+                    <h5 className="card-title">{card.title}</h5>
+                    <ul>
+                      {card.courses.map((course, i) => (
+                        <li key={i}>{course}</li>
+                      ))}
+                    </ul>
+                    <p><strong>Total Credits:</strong> {card.totalCredits}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-5">
-        <div className="container">
-          <h2 className="text-center mb-4">Contact Us</h2>
-          <p className="text-center">If you have any questions or need support, feel free to reach out!</p>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">Your Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="form-control"
-                placeholder="Enter your email"
-                required
-              />
+      {/* Modal for Selected Card */}
+      {selectedCard && (
+        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{selectedCard.title}</h5>
+                <button type="button" className="btn-close" onClick={() => setSelectedCard(null)}></button>
+              </div>
+              <div className="modal-body">
+                <ul>
+                  {selectedCard.courses.map((course, i) => (
+                    <li key={i}>{course}</li>
+                  ))}
+                </ul>
+                <p><strong>Total Credits:</strong> {selectedCard.totalCredits}</p>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" onClick={() => setSelectedCard(null)}>Close</button>
+              </div>
             </div>
-            <div className="mb-3">
-              <textarea
-                name="message"
-                className="form-control"
-                placeholder="Your message"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className="btn btn-success w-100">Send Message</button>
-          </form>
+          </div>
         </div>
-      </section>
+      )}
 
       {/* Footer */}
       <footer className="bg-primary text-white text-center py-3">
