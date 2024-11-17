@@ -14,15 +14,131 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+// HARDCODED FOR NOW - will be replaced by AI model
     const plan = `
-      <h3>Your 4-Year Plan:</h3>
-      <p><strong>Major:</strong> ${formData.major}</p>
-      <p><strong>Goals:</strong> ${formData.goals}</p>
-      <p>Year 1: Focus on foundational courses in ${formData.major}. Set a study routine. Start exploring extracurriculars.</p>
-      <p>Year 2: Dive deeper into advanced subjects. Network with professors. Start internships.</p>
-      <p>Year 3: Begin to specialize. Focus on personal development. Prepare for your capstone project or thesis.</p>
-      <p>Year 4: Finish your degree with strong achievements. Prepare for post-graduation career opportunities.</p>
+      <div class="plan-container">
+  <div class="card">
+    <h4>Semester 1: Fall Year 1</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 2: Spring Year 1</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 3: Fall Year 2</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 4: Spring Year 2</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 5: Fall Year 3</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 6: Spring Year 3</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 7: Fall Year 4</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 8: Spring Year 4</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 9: Fall Year 5</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 10: Spring Year 5</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 11: Fall Year 6</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Semester 12: Spring Year 6</h4>
+    <ul>
+      <li>Course 1: [Course Name] - [Credits]</li>
+      <li>Course 2: [Course Name] - [Credits]</li>
+      <li>Course 3: [Course Name] - [Credits]</li>
+      <li>Course 4: [Course Name] - [Credits]</li>
+      <li><strong>Total Credits:</strong> [Total]</li>
+    </ul>
+  </div>
+</div>
+
     `;
     setGeneratedPlan(plan);
   };
