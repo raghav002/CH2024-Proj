@@ -1,0 +1,101 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+import csv
+
+def scrape_cs_courses(url):
+    """Scrape course data from the given UW-Madison Computer Science page."""
+    response = requests.get(url)
+    if response.status_code != 200:
+        print("Failed to retrieve the webpage.")
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    courses = []
+
+    # Find all course blocks
+    course_blocks = soup.find_all("div", class_="courseblock")
+    
+    for block in course_blocks:
+        # Extract course number and title
+        title_tag = block.find("p", class_="courseblocktitle")
+        if not title_tag:
+            continue
+        title_text = title_tag.get_text(strip=True)
+        course_number_and_title = " ".join(title_text.split()[:2]) + " " + " ".join(title_text.split()[2:])
+
+        # Extract description
+        description_tag = block.find("p", class_="courseblockdesc")
+        description = description_tag.get_text(strip=True) if description_tag else "No description available."
+
+        # Extract credits
+        credits_match = re.search(r"(\d+)-?(\d+)? Credits", title_text)
+        if credits_match:
+            credits = int(credits_match.group(1))  # Use the lower bound if a range is provided
+        else:
+            credits = 0
+
+        # Extract prerequisites
+        prereq_tag = block.find("p", class_="courseblockextra")
+        prerequisites = []
+        if prereq_tag and "Requisites" in prereq_tag.get_text():
+            prereq_text = prereq_tag.get_text(strip=True).split("Requisites:")[1]
+            prerequisites = parse_prerequisites(prereq_text)
+
+        # Add the course to the list
+        courses.append({
+            "course_number_and_title": course_number_and_title,
+            "description": description,
+            "credits": credits,
+            "prerequisites": prerequisites
+        })
+
+    return courses
+
+def parse_prerequisites(prereq_text):
+    """Parse prerequisites text into a structured list."""
+    prereq_text = prereq_text.lower()
+    prereq_text = re.sub(r"[.,]", "", prereq_text)  # Remove punctuation
+    prereq_text = re.sub(r"\s+", " ", prereq_text)  # Normalize whitespace
+    
+    # Split by logical operators (or, and)
+    if " or " in prereq_text:
+        options = [opt.strip() for opt in prereq_text.split(" or ")]
+        return ["or: " + ", ".join(options)]
+    elif " and " in prereq_text:
+        groups = prereq_text.split(" and ")
+        structured = ["and: " + group.strip() for group in groups]
+        return structured
+    else:
+        return [prereq_text.strip()]
+
+def save_to_csv(courses, file_name):
+    """Save the scraped course data to a CSV file."""
+    keys = ["course_number_and_title", "description", "credits", "prerequisites"]
+    with open(file_name, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=keys)
+        writer.writeheader()
+        for course in courses:
+            writer.writerow({
+                "course_number_and_title": course["course_number_and_title"],
+                "description": course["description"],
+                "credits": course["credits"],
+                "prerequisites": "; ".join(course["prerequisites"])
+            })
+
+def main():
+    url = "https://guide.wisc.edu/courses/comp_sci/"
+    print("Scraping UW-Madison Computer Science courses...")
+    courses = scrape_cs_courses(url)
+
+    if not courses:
+        print("No courses found.")
+        return
+
+    # Save to CSV
+    file_name = "courses.csv"
+    save_to_csv(courses, file_name)
+    print(f"Data saved to {file_name}")
+
+if __name__ == "__main__":
+    main()
