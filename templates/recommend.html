@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Recommendation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Find Your Recommended Courses</h1>
+    <form id="recommend-form">
+        <label for="interests">Enter Your Interests:</label><br>
+        <textarea id="interests" name="interests" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Get Recommendations</button>
+    </form>
+    <div id="output"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#recommend-form').submit(function (e) {
+                e.preventDefault();
+
+                const interests = $('#interests').val();
+                $.ajax({
+                    url: '/recommend',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ interests: interests, num_recommendations: 5 }),
+                    success: function (response) {
+                        let output = '<h2>Recommended Courses:</h2>';
+                        response.forEach(course => {
+                            output += `<p><strong>${course.Title}</strong> (${course.Credits} credits)<br>${course.Description}</p>`;
+                        });
+                        output += '<h1>Test</h1>';
+                        $('#output').html(output);
+                    },
+                    error: function () {
+                        alert('Error fetching recommendations.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
