@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 app = Flask(__name__)
 
 # Load the CSV file and specify the 'credits' column as integers
-courses_df = pd.read_csv("courses_updated.csv", dtype={"credits": int})
+courses_df = pd.read_csv("cs_courses.csv", dtype={"credits": int})
 requirements_df = pd.read_csv("cs_requirements.csv")
 
 # Helper function: Check prerequisites

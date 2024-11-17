@@ -2,8 +2,8 @@ import pandas as pd
 import re
 
 # Load the CSV file
-input_file = "courses_updated.csv"  # Replace with the path to your file
-output_file = "courses_updated.csv"
+input_file = "cs_courses.csv"  # Replace with the path to your file
+output_file = "cs_courses.csv"
 
 # Read the CSV file
 df = pd.read_csv(input_file)
