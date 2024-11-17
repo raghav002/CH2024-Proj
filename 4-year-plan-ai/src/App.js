@@ -1,36 +1,43 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap's JS bundle for modal functionality
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
-  const [formData, setFormData] = useState({ major: '', goals: '' });
-  const [generatedPlan, setGeneratedPlan] = useState('');
-  const [selectedCard, setSelectedCard] = useState(null); // State for the clicked card
+  const [formData, setFormData] = useState({
+    interests: '',
+    credits: '',
+    transferCredits: '',
+    completedCourses: '',
+  });
+  const [generatedPlan, setGeneratedPlan] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // HARDCODED FOR NOW - will be replaced by AI model
+
+    // Mock Data for Generated Plan
     const plan = [
-      { title: "Semester 1: Fall Year 1", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 2: Spring Year 1", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 3: Summer Year 1", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 4: Fall Year 2", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 5: Spring Year 2", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 6: Summer Year 2", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 7: Fall Year 3", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 8: Spring Year 3", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 9: Summer Year 3", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 10: Fall Year 4", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 11: Spring Year 4", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" },
-      { title: "Semester 12: Summer Year 4", courses: ["Course 1: [Name] - [Credits]", "Course 2: [Name] - [Credits]", "Course 3: [Name] - [Credits]", "Course 4: [Name] - [Credits]"], totalCredits: "[Total]" }
+      {
+        title: 'Semester 1: Fall Year 1',
+        courses: ['Intro to Programming', 'Math 101', 'English 101', 'History 101'],
+        totalCredits: '15',
+      },
+      {
+        title: 'Semester 2: Spring Year 1',
+        courses: ['Data Structures', 'Physics 101', 'Art 101', 'Philosophy 101'],
+        totalCredits: '16',
+      },
     ];
-    
+
     setGeneratedPlan(plan);
   };
 
@@ -59,9 +66,6 @@ const App = () => {
               <li className="nav-item">
                 <a href="#generate" className="nav-link text-white">Generate Plan</a>
               </li>
-              <li className="nav-item">
-                <a href="#contact" className="nav-link text-white">Contact</a>
-              </li>
             </ul>
           </div>
         </nav>
@@ -70,7 +74,7 @@ const App = () => {
       {/* Hero Section */}
       <section id="hero" className="bg-dark text-white text-center py-5">
         <div className="container">
-          <h1 className="display-4">Welcome to Your Personalized 4-Year Plan Powered by AI</h1>
+          <h1 className="display-4">Welcome to Your Personalized 4-Year Plan</h1>
           <p className="lead">Let AI help you map out your next four years for academic and professional success!</p>
           <a href="#generate" className="btn btn-warning btn-lg">Get Started</a>
         </div>
@@ -80,7 +84,7 @@ const App = () => {
       <section id="about" className="py-5">
         <div className="container">
           <h2 className="text-center mb-4">How It Works</h2>
-          <p className="text-center">Our AI-powered tool analyzes your goals and interests to create a tailored 4-year plan to guide you through college, career growth, and personal development.</p>
+          <p className="text-center">Our AI-powered tool analyzes your goals and interests to create a tailored 4-year plan to guide you through college and beyond.</p>
         </div>
       </section>
 
@@ -96,44 +100,46 @@ const App = () => {
                 id="interests"
                 name="interests"
                 className="form-control"
-                placeholder="ex. Web Development"
-                value={formData.major}
+                placeholder="e.g., Web Development, AI, Design"
+                value={formData.interests}
                 onChange={handleChange}
                 required
               />
             </div>
             <div className="mb-3">
               <label htmlFor="credits" className="form-label">How many credits per semester?</label>
-              <textarea
+              <input
+                type="number"
                 id="credits"
                 name="credits"
                 className="form-control"
-                placeholder="ex. 15"
-                value={formData.goals}
+                placeholder="e.g., 15"
+                value={formData.credits}
                 onChange={handleChange}
                 required
-              ></textarea>
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="transfer_credits" className="form-label">How many transfer credits do you have?</label>
-              <textarea
-                id="transfer_credits"
-                name="transfer_credits"
+              <label htmlFor="transferCredits" className="form-label">How many transfer credits do you have?</label>
+              <input
+                type="number"
+                id="transferCredits"
+                name="transferCredits"
                 className="form-control"
-                placeholder="ex. 4"
-                value={formData.goals}
+                placeholder="e.g., 12"
+                value={formData.transferCredits}
                 onChange={handleChange}
                 required
-              ></textarea>
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="completed_courses" className="form-label">Which classes have you completed?</label>
+              <label htmlFor="completedCourses" className="form-label">Which classes have you already completed?</label>
               <textarea
-                id="completed_courses"
-                name="completed_courses"
+                id="completedCourses"
+                name="completedCourses"
                 className="form-control"
-                placeholder="ex. CS200, MATH222"
-                value={formData.goals}
+                placeholder="e.g., CS101, Math 222"
+                value={formData.completedCourses}
                 onChange={handleChange}
                 required
               ></textarea>
@@ -142,7 +148,7 @@ const App = () => {
           </form>
 
           {/* Render Generated Plan */}
-          {generatedPlan && (
+          {generatedPlan.length > 0 && (
             <div className="plan-container d-flex flex-wrap gap-3">
               {generatedPlan.map((card, index) => (
                 <div
