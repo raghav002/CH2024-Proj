@@ -90,25 +90,49 @@ const App = () => {
           <h2 className="text-center mb-4">Generate Your Plan</h2>
           <form onSubmit={handleSubmit} className="mb-4">
             <div className="mb-3">
-              <label htmlFor="major" className="form-label">What is your major?</label>
+              <label htmlFor="interests" className="form-label">What are your interests?</label>
               <input
                 type="text"
-                id="major"
-                name="major"
+                id="interests"
+                name="interests"
                 className="form-control"
-                placeholder="Enter your major"
+                placeholder="ex. Web Development"
                 value={formData.major}
                 onChange={handleChange}
                 required
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="goals" className="form-label">What are your goals for the next 4 years?</label>
+              <label htmlFor="credits" className="form-label">How many credits per semester?</label>
               <textarea
-                id="goals"
-                name="goals"
+                id="credits"
+                name="credits"
                 className="form-control"
-                placeholder="Academic, personal, or career goals..."
+                placeholder="ex. 15"
+                value={formData.goals}
+                onChange={handleChange}
+                required
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="transfer_credits" className="form-label">How many transfer credits do you have?</label>
+              <textarea
+                id="transfer_credits"
+                name="transfer_credits"
+                className="form-control"
+                placeholder="ex. 4"
+                value={formData.goals}
+                onChange={handleChange}
+                required
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="completed_courses" className="form-label">Which classes have you completed?</label>
+              <textarea
+                id="completed_courses"
+                name="completed_courses"
+                className="form-control"
+                placeholder="ex. CS200, MATH222"
                 value={formData.goals}
                 onChange={handleChange}
                 required
