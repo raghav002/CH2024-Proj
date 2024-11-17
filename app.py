@@ -6,8 +6,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 app = Flask(__name__)
 
 # Load data
-courses_df = pd.read_csv("courses.csv")  # Columns: title, description, credits, prerequisites
-requirements_df = pd.read_csv("degree_requirements.csv")  # Columns: Category, Subcategory, Courses, Number needed
+courses_df = pd.read_csv("cs_courses.csv")  # Columns: title, description, credits, prerequisites
+requirements_df = pd.read_csv("cs_requirements.csv")  # Columns: Category, Subcategory, Courses, Number needed
 
 # Helper function: Check prerequisites
 def check_prerequisites(prerequisite_string, completed_courses):
@@ -35,7 +35,7 @@ def check_prerequisites(prerequisite_string, completed_courses):
 # Helper function: Recommend courses based on user interests
 def recommend_courses(interests, courses_df):
     vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = vectorizer.fit_transform(courses_df['description'])
+    tfidf_matrix = vectorizer.fit_transform(courses_df['Description'])
     user_vector = vectorizer.transform([interests])
     similarity_scores = cosine_similarity(user_vector, tfidf_matrix).flatten()
     courses_df['similarity'] = similarity_scores
@@ -47,7 +47,6 @@ def generate_schedule(user_data):
     transfer_credits = user_data['transfer_credits']
     completed_courses = user_data['completed_courses']
     interests = user_data['interests']
-    
     # Filter courses based on interests
     recommended_courses = recommend_courses(interests, courses_df)
     
@@ -91,6 +90,7 @@ def index():
 @app.route('/generate_schedule', methods=['POST'])
 def generate_schedule_endpoint():
     user_data = request.json
+    print("Test")
     schedule = generate_schedule(user_data)
     return jsonify(schedule)
 
